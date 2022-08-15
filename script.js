@@ -33,6 +33,15 @@ const cartItemClickListener = (event) => {
   saveCartItems(cartItems.innerHTML);
 };
 
+const totalPrice = createCustomElement('span', 'total-price', 'Subtotal:');
+const empyCart = document.querySelector('.empty-cart');
+empyCart.parentElement.insertBefore(totalPrice, empyCart);
+const subTotal = (price) => {
+  const result = [];
+  result.push(price);
+  return result;
+};
+
 const createCartItemElement = ({ sku, name, salePrice }) => {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -58,6 +67,7 @@ const createCartList = async (event) => {
   const elementLi = createCartItemElement(product);
   cartItems.appendChild(elementLi);
   saveCartItems(cartItems.innerHTML);
+  subTotal(price);
 };
 
 const addCartItem = async () => {
@@ -68,6 +78,8 @@ const addCartItem = async () => {
   }
 };
 
+totalPrice.innerText = 'Subtotal:';
+
 const initialRenderization = () => {
   if (getSavedCartItems() !== null) {
     cartItems.innerHTML = getSavedCartItems();
@@ -76,7 +88,6 @@ const initialRenderization = () => {
     }
   }
 };
-
 window.onload = () => {
   addCartItem();
   initialRenderization();
