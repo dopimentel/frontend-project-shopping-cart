@@ -37,5 +37,13 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
+fetchProducts('computador').then((data) => data.results
+  .map(({ id: sku, title: name, thumbnail: image }) => ({ sku, name, image }))
+  .forEach((item) => {
+    const items = document.querySelector('.items');
+    items.appendChild(createProductItemElement(item));
+  }));
+
 window.onload = () => {
+  
 };
