@@ -38,19 +38,33 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
+const items = document.querySelector('.items');
+
+const listCreater = async () => {
+const data = await fetchProducts('computador');
+data.results.forEach(({ id: sku, title: name, thumbnail: image }) => {
+    const elementSection = createProductItemElement({ sku, name, image });
+    items.appendChild(elementSection);
+  });
+};
+
+const createCartList = async (event) => {
+  const itemData = await fetchItem(getSkuFromProductItem(event.target.parentElement));
+  const { id, title, price } = itemData;
+  const product = { sku: id, name: title, salePrice: price };
+  const elementLi = createCartItemElement(product);
+  const cartItems = document.querySelector('.cart__items');
+  cartItems.appendChild(elementLi);
+};
+
+const addCartItem = async () => {
+  await listCreater();
+  addBtns = document.querySelectorAll('.item__add');
+  for (let index = 0; index < addBtns.length; index += 1) {
+    addBtns[index].addEventListener('click', createCartList);
+  }
+};
+
 window.onload = () => {
-  fetchProducts('computador').then((data) => data.results
-    .forEach(({ id: sku, title: name, thumbnail: image }) => {
-      const items = document.querySelector('.items');
-      const elementSection = createProductItemElement({ sku, name, image });
-      items.appendChild(elementSection);
-      elementSection.querySelector('.item__add').addEventListener('click', async () => {
-        const itemData = await fetchItem(getSkuFromProductItem(elementSection));
-        const { id, title, price } = itemData;
-        const product = { sku: id, name: title, salePrice: price };
-        const elementLi = createCartItemElement(product);
-        const cartItems = document.querySelector('.cart__items');
-        cartItems.appendChild(elementLi);
-      });
-    }));
+  addCartItem();
 };
