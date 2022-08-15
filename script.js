@@ -39,18 +39,18 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 };
 
 window.onload = () => {
-fetchProducts('computador').then((data) => data.results
-  .forEach(({ id: sku, title: name, thumbnail: image }) => {
-    const items = document.querySelector('.items');
-    const element = createProductItemElement({ sku, name, image });
-    items.appendChild(element);
-    element.querySelector('.item__add').addEventListener('click', async () => {
-      const itemData = await fetchItem(getSkuFromProductItem(element));
-      const { id, title, price } = itemData;
-      const product = { sku: id, name: title, salePrice: price };
-      const elementLi = createCartItemElement(product);
-      const cartItems = document.querySelector('.cart__items');
-      cartItems.appendChild(elementLi);
-    });
-  }));
+  fetchProducts('computador').then((data) => data.results
+    .forEach(({ id: sku, title: name, thumbnail: image }) => {
+      const items = document.querySelector('.items');
+      const elementSection = createProductItemElement({ sku, name, image });
+      items.appendChild(elementSection);
+      elementSection.querySelector('.item__add').addEventListener('click', async () => {
+        const itemData = await fetchItem(getSkuFromProductItem(elementSection));
+        const { id, title, price } = itemData;
+        const product = { sku: id, name: title, salePrice: price };
+        const elementLi = createCartItemElement(product);
+        const cartItems = document.querySelector('.cart__items');
+        cartItems.appendChild(elementLi);
+      });
+    }));
 };
