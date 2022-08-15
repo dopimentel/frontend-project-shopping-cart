@@ -57,7 +57,6 @@ const createCartList = async (event) => {
   const product = { sku: id, name: title, salePrice: price };
   const elementLi = createCartItemElement(product);
   cartItems.appendChild(elementLi);
-  console.log(cartItems.innerHTML);
   saveCartItems(cartItems.innerHTML);
 };
 
