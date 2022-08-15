@@ -7,5 +7,9 @@ describe('4 - Teste a função getSavedCartItems', () => {
   it('', () => {
     getSavedCartItems();
     expect(localStorage.getItem).toHaveBeenCalled();
-  })
+  });
+  it('', () => {
+    getSavedCartItems();
+    expect(localStorage.getItem).toHaveBeenCalledWith('cartItems');
+  });
 });
