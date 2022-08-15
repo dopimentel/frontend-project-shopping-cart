@@ -19,4 +19,8 @@ describe('2 - Teste a função fetchItem', () => {
     const result = await fetchItem('MLB1615760527');
     expect(result).toEqual(item);
   })
+  it('return error "You must provide an url', async () => {
+    const failedRequest = await fetchItem();
+    expect(failedRequest).toEqual(new Error("You must provide an url"));
+  });
 });
