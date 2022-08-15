@@ -15,4 +15,8 @@ describe('2 - Teste a função fetchItem', () => {
     const URL = 'https://api.mercadolibre.com/items/MLB1615760527';
     expect(fetch).toHaveBeenCalledWith(URL);
   })
+  it('', async () => {
+    const result = await fetchItem('MLB1615760527');
+    expect(result).toEqual(item);
+  })
 });
