@@ -30,6 +30,7 @@ const cartItems = document.querySelector('.cart__items');
 
 const cartItemClickListener = (event) => {
   cartItems.removeChild(event.target);
+  saveCartItems(cartItems.innerHTML);
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -71,6 +72,9 @@ const addCartItem = async () => {
 const initialRenderization = () => {
   if (getSavedCartItems() !== null) {
     cartItems.innerHTML = getSavedCartItems();
+    for (let index = 0; index < cartItems.children.length; index += 1) {
+      cartItems.children[index].addEventListener('click', cartItemClickListener);
+    }
   }
 };
 
