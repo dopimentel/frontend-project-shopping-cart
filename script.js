@@ -26,7 +26,7 @@ const createProductItemElement = ({ sku, name, image }) => {
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
-const cartItemClickListener = (_event) => {
+const cartItemClickListener = (event) => {
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -42,7 +42,7 @@ fetchProducts('computador').then((data) => data.results
     const items = document.querySelector('.items');
     const element = createProductItemElement({ sku, name, image });
     items.appendChild(element);
-    element.addEventListener('click', async () => {
+    element.querySelector('.item__add').addEventListener('click', async () => {
       const itemData = await fetchItem(getSkuFromProductItem(element));
       const { id, title, price } = itemData;
       const product = { sku: id, name: title, salePrice: price };
