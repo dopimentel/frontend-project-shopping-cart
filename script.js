@@ -1,3 +1,7 @@
+const items = document.querySelector('.items');
+const cartItems = document.querySelector('.cart__items');
+const emptyCart = document.querySelector('.empty-cart');
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -26,20 +30,9 @@ const createProductItemElement = ({ sku, name, image }) => {
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
-const cartItems = document.querySelector('.cart__items');
-
 const cartItemClickListener = (event) => {
   cartItems.removeChild(event.target);
   saveCartItems(cartItems.innerHTML);
-};
-
-const totalPrice = createCustomElement('span', 'total-price', 'Subtotal:');
-const emptyCart = document.querySelector('.empty-cart');
-emptyCart.parentElement.insertBefore(totalPrice, emptyCart);
-const subTotal = (price) => {
-  const result = [];
-  result.push(price);
-  return result;
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -50,8 +43,18 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-const items = document.querySelector('.items');
 const loadingElement = createCustomElement('span', 'loading', 'carregando...');
+loading = () => items.appendChild(loadingElement);
+loaded = () => items.removeChild(loadingElement);
+
+const totalPrice = createCustomElement('span', 'total-price', 'Subtotal:');
+emptyCart.parentElement.insertBefore(totalPrice, emptyCart);
+const subTotal = (price) => {
+  const result = [];
+  result.push(price);
+  return result;
+};
+totalPrice.innerText = 'Subtotal:';
 
 const CreateList = async () => {
 loading();
@@ -81,7 +84,6 @@ const addListItemsListener = async () => {
   }
 };
 
-totalPrice.innerText = 'Subtotal:';
 const clearCart = () => {
   while (cartItems.children.length > 0) {
     cartItems.removeChild(cartItems.firstChild);
@@ -98,9 +100,6 @@ const initialRenderization = () => {
     }
   }
 };
-
-loading = () => items.appendChild(loadingElement);
-loaded = () => items.removeChild(loadingElement);
 
 window.onload = () => {
   addListItemsListener();
