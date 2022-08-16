@@ -51,13 +51,16 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 };
 
 const items = document.querySelector('.items');
+const loadingElement = createCustomElement('span', 'loading', 'carregando...');
 
 const CreateList = async () => {
+loading();
 const data = await fetchProducts('computador');
 data.results.forEach(({ id: sku, title: name, thumbnail: image }) => {
     const elementSection = createProductItemElement({ sku, name, image });
     items.appendChild(elementSection);
   });
+loaded();
 };
 
 const CreateCartList = async (event) => {
@@ -95,6 +98,10 @@ const initialRenderization = () => {
     }
   }
 };
+
+loading = () => items.appendChild(loadingElement);
+loaded = () => items.removeChild(loadingElement);
+
 window.onload = () => {
   addListItemsListener();
   initialRenderization();
