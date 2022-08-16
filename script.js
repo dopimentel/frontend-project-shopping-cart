@@ -31,7 +31,7 @@ const createProductItemElement = ({ sku, name, image }) => {
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
 const cartItemClickListener = (event) => {
-  cartItems.removeChild(event.target);
+  event.target.remove();
   saveCartItems(cartItems.innerHTML);
 };
 
@@ -84,13 +84,13 @@ const addListItemsListener = async () => {
   }
 };
 
-const clearCart = () => {
+const cartCleaner = () => {
   while (cartItems.children.length > 0) {
-    cartItems.removeChild(cartItems.firstChild);
+    cartItems.firstChild.remove();
     saveCartItems(cartItems.innerHTML);
   }
 };
-emptyCart.addEventListener('click', clearCart);
+emptyCart.addEventListener('click', cartCleaner);
 
 const initialRenderization = () => {
   if (getSavedCartItems() !== null) {
