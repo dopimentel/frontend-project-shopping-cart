@@ -34,8 +34,8 @@ const cartItemClickListener = (event) => {
 };
 
 const totalPrice = createCustomElement('span', 'total-price', 'Subtotal:');
-const empyCart = document.querySelector('.empty-cart');
-empyCart.parentElement.insertBefore(totalPrice, empyCart);
+const emptyCart = document.querySelector('.empty-cart');
+emptyCart.parentElement.insertBefore(totalPrice, emptyCart);
 const subTotal = (price) => {
   const result = [];
   result.push(price);
@@ -52,7 +52,7 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 
 const items = document.querySelector('.items');
 
-const listCreater = async () => {
+const CreateList = async () => {
 const data = await fetchProducts('computador');
 data.results.forEach(({ id: sku, title: name, thumbnail: image }) => {
     const elementSection = createProductItemElement({ sku, name, image });
@@ -60,7 +60,7 @@ data.results.forEach(({ id: sku, title: name, thumbnail: image }) => {
   });
 };
 
-const createCartList = async (event) => {
+const CreateCartList = async (event) => {
   const itemData = await fetchItem(getSkuFromProductItem(event.target.parentElement));
   const { id, title, price } = itemData;
   const product = { sku: id, name: title, salePrice: price };
@@ -70,11 +70,11 @@ const createCartList = async (event) => {
   subTotal(price);
 };
 
-const addCartItem = async () => {
-  await listCreater();
-  addBtns = document.querySelectorAll('.item__add');
-  for (let index = 0; index < addBtns.length; index += 1) {
-    addBtns[index].addEventListener('click', createCartList);
+const addListItemsListener = async () => {
+  await CreateList();
+  btnsAdd = document.querySelectorAll('.item__add');
+  for (let index = 0; index < btnsAdd.length; index += 1) {
+    btnsAdd[index].addEventListener('click', CreateCartList);
   }
 };
 
@@ -89,6 +89,6 @@ const initialRenderization = () => {
   }
 };
 window.onload = () => {
-  addCartItem();
+  addListItemsListener();
   initialRenderization();
 };
