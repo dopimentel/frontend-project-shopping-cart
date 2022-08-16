@@ -79,6 +79,13 @@ const addListItemsListener = async () => {
 };
 
 totalPrice.innerText = 'Subtotal:';
+const clearCart = () => {
+  while (cartItems.children.length > 0) {
+    cartItems.removeChild(cartItems.firstChild);
+    saveCartItems(cartItems.innerHTML);
+  }
+};
+emptyCart.addEventListener('click', clearCart);
 
 const initialRenderization = () => {
   if (getSavedCartItems() !== null) {
